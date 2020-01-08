@@ -1,11 +1,15 @@
 <template>
   <div class="login">
     <van-nav-bar title="登录"></van-nav-bar>
-    <van-cell-group>
+  <ValidationObserver>
+    <ValidationProvider name='手机号' rules='required' v-slot='{errors}'>
       <van-field placeholder="请输入手机号" v-model="user.mobile">
         <i slot="left-icon" class="icon icon-Mobile-"></i>
       </van-field>
+        <!-- <p>{{errors[0]}}</p> -->
+    </ValidationProvider>
 
+    <ValidationProvider>
       <van-field placeholder="请输入验证码" v-model="user.code">
         <i slot="left-icon" class="icon icon-icon--"></i>
         <div slot="button">
@@ -19,7 +23,8 @@
           <van-button v-else size="small" type="primary" @click="changeCountDown">发送验证码</van-button>
         </div>
       </van-field>
-    </van-cell-group>
+    </ValidationProvider>
+  </ValidationObserver>
     <div class="loginButton">
       <van-button type="info" @click="login">登录</van-button>
     </div>
