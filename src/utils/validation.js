@@ -14,6 +14,19 @@ import { messages } from 'vee-validate/dist/locale/zh_CN.json'
 Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)
 
+extend('mobile', { validate: value => {
+  return /^1(3|5|6|7|8|9)\d{9}$/.test(value)
+},
+message: '手机号格式错误'
+})
+
+extend('code', {
+  validate: value => {
+    return /^\d{6}$/.test(value)
+  },
+  message: '验证码格式错误'
+})
+
 // 配置验证规则和中文提示消息
 Object.keys(rules).forEach(rule => {
   extend(rule, {

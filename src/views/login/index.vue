@@ -1,15 +1,15 @@
 <template>
   <div class="login">
     <van-nav-bar title="登录"></van-nav-bar>
-  <ValidationObserver>
-    <ValidationProvider name='手机号' rules='required' v-slot='{errors}'>
+  <ValidationObserver ref="myform">
+    <ValidationProvider name='手机号' rules='required|mobile' immediate>
       <van-field placeholder="请输入手机号" v-model="user.mobile">
         <i slot="left-icon" class="icon icon-Mobile-"></i>
       </van-field>
         <!-- <p>{{errors[0]}}</p> -->
     </ValidationProvider>
 
-    <ValidationProvider>
+    <ValidationProvider name='验证码' rules='required|code'  immediate>
       <van-field placeholder="请输入验证码" v-model="user.code">
         <i slot="left-icon" class="icon icon-icon--"></i>
         <div slot="button">
@@ -35,6 +35,7 @@
 <script>
 // import request from '@/utils/request.js'
 import { login as onLogin, getCodes } from '@/api/user.js' // 引入用户相关接口
+import { validate } from 'vee-validate'
 export default {
   name: 'login',
   data () {
@@ -49,6 +50,13 @@ export default {
   methods: {
     async changeCountDown () {
       try {
+        const validateResult = await validate(this.user.mobile, 'required|mobile', { name: '手机号' })
+        // console.log(validateResult)
+        if (!validateResult.valid) {
+          this.$toast(validateResult.errors[0])
+          return
+        }
+        // 表单验证成功，执行发送验证码请求
         let result = await getCodes(this.user)
         this.$toast('发送成功，请注意查收！')
         console.log(result)
@@ -64,6 +72,18 @@ export default {
     },
     // 用户登录请求
     async login () {
+      const success = await this.$refs.myform.validate()
+      if (!success) {
+        const errors = this.$refs.myform.errors
+        for (let key in errors) {
+          const item = errors[key]
+          if (item[0]) {
+            this.$toast(item[0])
+            return
+          }
+        }
+        return
+      }
       // 加载loading
       this.$toast.loading({
         message: '加载中...',
