@@ -1,5 +1,6 @@
 import axios from 'axios'
 import jsonBig from 'json-bigint' // 大数字处理
+import store from '@/store'
 
 const request = axios.create({
   baseURL: 'http://ttapi.research.itcast.cn/'
@@ -18,14 +19,19 @@ request.defaults.transformResponse = [function (data) {
 }]
 
 // 请求拦截
-// request.interceptors.request.use(
-//   function (config) {
-//     return config
-//   },
-//   function (error) {
-//     return Promise.reject(error)
-//   }
-// )
+request.interceptors.request.use(
+  function (config) {
+    // console.log(config)
+    const { user } = store.state
+    if (user) {
+      config.headers.Authorization = `Bearer ${user}`
+    }
+    return config
+  },
+  function (error) {
+    return Promise.reject(error)
+  }
+)
 
 // 响应拦截
 // request.interceptors.response.use(

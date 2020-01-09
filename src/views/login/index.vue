@@ -91,7 +91,8 @@ export default {
       })
       try {
         let result = await onLogin(this.user)
-        console.log(result)
+        // console.log(result.data.data)
+        this.$store.commit('setUser', result.data.data)
         this.$toast.success('登陆成功嘞')
       } catch (error) {
         console.log(error)
