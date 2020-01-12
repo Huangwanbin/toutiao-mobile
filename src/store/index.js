@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { getItem, setItem } from '@/utils/storage.js'
+import { getItem, setItem } from '@/utils/storage.js' // 本地存储方法载入
 
 Vue.use(Vuex)
 

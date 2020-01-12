@@ -2,6 +2,7 @@ import axios from 'axios'
 import jsonBig from 'json-bigint' // 大数字处理
 import store from '@/store'
 
+// 创建一个新的axios实例对象request
 const request = axios.create({
   baseURL: 'http://ttapi.research.itcast.cn/'
 })
@@ -24,7 +25,7 @@ request.interceptors.request.use(
     // console.log(config)
     const { user } = store.state
     if (user) {
-      config.headers.Authorization = `Bearer ${user}`
+      config.headers.Authorization = `Bearer ${user.token}`
     }
     return config
   },
@@ -43,4 +44,5 @@ request.interceptors.request.use(
 //   }
 // )
 
+// 导出这个实例
 export default request

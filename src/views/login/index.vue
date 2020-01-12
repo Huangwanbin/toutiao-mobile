@@ -94,6 +94,7 @@ export default {
         // console.log(result.data.data)
         this.$store.commit('setUser', result.data.data)
         this.$toast.success('登陆成功嘞')
+        this.$router.push('/my')
       } catch (error) {
         console.log(error)
         this.$toast.fail('登陆失败')
@@ -104,12 +105,6 @@ export default {
 </script>
 
 <style lang='less' scoped>
-.van-nav-bar {
-  background-color: #3296fa;
-  .van-nav-bar__title {
-    color: #fff;
-  }
-}
 .loginButton {
   padding: 27px 16px;
   button {

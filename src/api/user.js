@@ -15,3 +15,19 @@ export const getCodes = data => {
     url: `/app/v1_0/sms/codes/${data.mobile}`
   })
 }
+
+// 获取用户自己信息
+export const getUserInfo = () => {
+  return request({
+    method: 'get',
+    url: '/app/v1_0/user'
+  })
+}
+
+// 获取当前用户信息
+export const getUserInfoById = Id => {
+  return request({
+    method: 'get',
+    url: `/app/v1_0/users/${Id}`
+  })
+}

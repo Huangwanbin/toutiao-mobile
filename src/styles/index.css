@@ -1,0 +1,14 @@
+@import 'base.css';
+@import 'mixins.css';
+.van-nav-bar {
+  background-color: #3296fa;
+}
+.van-nav-bar .van-nav-bar__title {
+  color: #fff;
+}
+.van-nav-bar .van-icon {
+  color: #fff;
+}
+body {
+  background-color: #ededed;
+}
