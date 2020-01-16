@@ -17,7 +17,7 @@
     <search-result v-if="isResultShow" :q="searchValue"></search-result>
     <!-- 联想搜索 -->
     <van-cell-group v-else-if="searchValue">
-      <van-cell icon="search" v-for="(item,index) in suggestionList" :key="index">
+      <van-cell icon="search" v-for="(item,index) in suggestionList" :key="index" @click="suggestionSearch(item)">
         <div slot="title" v-html="highLight(item)"></div>
       </van-cell>
     </van-cell-group>
@@ -69,6 +69,11 @@ export default {
     }
   },
   methods: {
+    // 联想建议搜索
+    suggestionSearch (q) {
+      this.onSearch(q)
+    },
+    // 通过历史搜素
     OnHistoryClick (item, index) {
       if (this.isDeleteHistoryShow) {
         this.historyList.splice(index, 1)
@@ -76,6 +81,7 @@ export default {
         this.onSearch(item)
       }
     },
+    // 搜索框获取焦点，不展示搜索结果
     SearchFocus () {
       this.isResultShow = false
     },

@@ -31,3 +31,22 @@ export const getUserInfoById = Id => {
     url: `/app/v1_0/users/${Id}`
   })
 }
+
+// 关注用户
+export const followUser = target => {
+  return request({
+    url: '/app/v1_0/user/followings',
+    method: 'post',
+    data: {
+      target
+    }
+  })
+}
+
+// 取消关注用户
+export const unFollowUser = target => {
+  return request({
+    url: `/app/v1_0/user/followings/${target}`,
+    method: 'delete'
+  })
+}

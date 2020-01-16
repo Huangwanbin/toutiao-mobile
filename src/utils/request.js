@@ -14,7 +14,6 @@ request.defaults.transformResponse = [function (data) {
     // 它内部有自己算法，会把大数字转成对象，我们用toString（）转成字符串格式
     return jsonBig.parse(data)
   } catch (error) {
-    console.log('转换失败', error)
     return {}
   }
 }]

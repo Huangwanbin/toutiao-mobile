@@ -25,3 +25,41 @@ export const getArticleContent = id => {
     url: `/app/v1_0/articles/${id}`
   })
 }
+
+// 添加收藏
+export const addCollect = id => {
+  return request({
+    url: '/app/v1_0/article/collections',
+    method: 'post',
+    data: {
+      target: id
+    }
+  })
+}
+
+// 取消收藏
+export const removeCollect = id => {
+  return request({
+    method: 'delete',
+    url: `/app/v1_0/article/collections/${id}`
+  })
+}
+
+// 点赞
+export const addLike = id => {
+  return request({
+    url: '/app/v1_0/article/likings',
+    method: 'post',
+    data: {
+      target: id
+    }
+  })
+}
+
+// 取消点赞
+export const removeLike = id => {
+  return request({
+    method: 'delete',
+    url: `/app/v1_0/article/likings/${id}`
+  })
+}

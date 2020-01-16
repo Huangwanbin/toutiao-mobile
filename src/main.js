@@ -11,6 +11,8 @@ import 'amfe-flexible' // 引入移动端适配
 
 import './styles/index.css' // 引入公共样式及基础样式
 
+import './utils/datetime'
+
 Vue.config.productionTip = false
 
 new Vue({

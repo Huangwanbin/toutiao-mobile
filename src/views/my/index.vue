@@ -84,6 +84,7 @@ export default {
           title: '是否确认退出？',
           message: '您是否确定要退出？'
         })
+        this.$router.push('/login')
         this.$store.commit('setUser', null)
       } catch (err) {
         // console.log(err)
