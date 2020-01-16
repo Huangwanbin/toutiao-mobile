@@ -22,19 +22,19 @@
           </div>
         </div>
         <van-button
-        class="follow-btn"
-        :type="articleContent.is_followed?'default':'info'"
-        size="small"
-        :loading='isBtnLoading'
-        round
-        v-if="!$store.state.user||articleContent.aut_id!==$store.state.user.id"
-        @click="onFllowClick"
+          class="follow-btn"
+          :type="articleContent.is_followed?'default':'info'"
+          size="small"
+          :loading="isBtnLoading"
+          round
+          v-if="!$store.state.user||articleContent.aut_id!==$store.state.user.id"
+          @click="onFllowClick"
         >{{articleContent.is_followed?'已关注':'+ 关注'}}</van-button>
       </div>
-      <div class="markdown-body" v-html="articleContent.content">
-
-      </div>
+      <div class="markdown-body" v-html="articleContent.content"></div>
       <van-divider>正文结束</van-divider>
+      <!-- 文章评论 -->
+      <article-comment :articleId="articleId"></article-comment>
     </div>
     <!-- /文章详情 -->
 
@@ -48,19 +48,40 @@
 
     <!-- 底部区域 -->
     <div class="footer">
-      <van-button class="write-btn" type="default" round size="small">写评论</van-button>
+      <van-button class="write-btn" type="default" round size="small" @click="isPopupShow=true">写评论</van-button>
       <van-icon class="comment-icon" name="comment-o" info="9" />
-      <van-icon color="orange" :name="articleContent.is_collected?'star':'star-o'" @click='onCollect' />
-      <van-icon color="#e5645f" :name="articleContent.attitude===1?'good-job':'good-job-o'" @click='onLike' />
+      <van-icon
+        color="orange"
+        :name="articleContent.is_collected?'star':'star-o'"
+        @click="onCollect"
+      />
+      <van-icon
+        color="#e5645f"
+        :name="articleContent.attitude===1?'good-job':'good-job-o'"
+        @click="onLike"
+      />
       <van-icon class="share-icon" name="share" />
     </div>
     <!-- /底部区域 -->
+
+    <!-- 底部弹出层 -->
+    <van-popup v-model="isPopupShow" position="bottom" :style="{ height: '20%' }" class="popup">
+      <comment-popup class="popupContent"></comment-popup>
+    </van-popup>
   </div>
 </template>
 
 <script>
-import { getArticleContent, addCollect, removeCollect, removeLike, addLike } from '@/api/article'
+import {
+  getArticleContent,
+  addCollect,
+  removeCollect,
+  removeLike,
+  addLike
+} from '@/api/article'
 import { followUser, unFollowUser } from '@/api/user'
+import articleComment from './components/article-comment'
+import commentPopup from './components/comment-popup'
 export default {
   name: 'articlePage',
   props: {
@@ -69,9 +90,13 @@ export default {
       type: String
     }
   },
-  components: {},
+  components: {
+    articleComment,
+    commentPopup
+  },
   data () {
     return {
+      isPopupShow: false,
       isBtnLoading: false,
       articleContent: {},
       isLoadingShow: false
@@ -90,7 +115,7 @@ export default {
             message: '取消关注'
           })
         } else {
-        // 如果没有关注，关注
+          // 如果没有关注，关注
           await followUser(this.articleContent.aut_id)
           this.$toast({
             type: 'success',
@@ -112,19 +137,17 @@ export default {
       })
       try {
         if (this.articleContent.attitude === 1) {
-        // 取消点赞
+          // 取消点赞
           await removeLike(this.articleContent.art_id)
           // console.log(res)
           this.articleContent.attitude = -1
-          this.$toast({ type: 'success',
-            message: '取消点赞' })
+          this.$toast({ type: 'success', message: '取消点赞' })
         } else {
-        // 点赞
+          // 点赞
           await addLike(this.articleContent.art_id)
           // console.log(res)
           this.articleContent.attitude = 1
-          this.$toast({ type: 'success',
-            message: '已点赞' })
+          this.$toast({ type: 'success', message: '已点赞' })
         }
       } catch (err) {
         console.log(err)
@@ -139,17 +162,15 @@ export default {
       })
       try {
         if (this.articleContent.is_collected) {
-        // 取消收藏
+          // 取消收藏
           await removeCollect(this.articleContent.art_id)
           // console.log(res)
-          this.$toast({ type: 'success',
-            message: '取消收藏' })
+          this.$toast({ type: 'success', message: '取消收藏' })
         } else {
-        // 添加收藏
+          // 添加收藏
           await addCollect(this.articleContent.art_id)
           // console.log(res)
-          this.$toast({ type: 'success',
-            message: '收藏成功' })
+          this.$toast({ type: 'success', message: '收藏成功' })
         }
         this.articleContent.is_collected = !this.articleContent.is_collected
       } catch (err) {
@@ -192,7 +213,7 @@ export default {
       margin: 0;
       padding-top: 24px;
       font-size: 20px;
-      color: #3A3A3A;
+      color: #3a3a3a;
     }
     .author-wrap {
       display: flex;
@@ -260,6 +281,13 @@ export default {
     .share-icon {
       bottom: -2px;
     }
+  }
+}
+.popup{
+  padding: 15px 0 15px 15px;
+  .popupContent{
+    height: 130px;
+    width: 350px;
   }
 }
 </style>
