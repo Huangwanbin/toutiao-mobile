@@ -1,7 +1,9 @@
 <template>
   <div class="homeContainer">
     <!-- 导航栏 -->
-    <van-nav-bar title="首页" left-arrow @click-left="$router.back()" fixed />
+    <van-nav-bar title="首页" left-arrow @click-left="$router.back()" fixed>
+      <van-button slot="right" size="small" round class="searchBtn" type="info" @click="$router.push('/search')"><van-icon name="search"  />搜索</van-button>
+    </van-nav-bar>
     <!-- /导航栏 -->
     <van-tabs v-model="active">
       <!-- 循环生成频道标签页 -->
@@ -19,7 +21,7 @@
       position="bottom"
       :style="{ height: '95%' }"
     >
-    <popup-container></popup-container>
+    <popup-container :channels='channels'  @enterChannel='enterChannel'></popup-container>
     </van-popup>
   </div>
 </template>
@@ -28,6 +30,8 @@
 import { getChannels } from '@/api/channel'
 import channelList from './components/articleList'
 import popupContainer from './components/popupContainer'
+import { setItem, getItem } from '@/utils/storage'
+
 export default {
   name: 'homePage',
   props: {},
@@ -43,14 +47,26 @@ export default {
     }
   },
   methods: {
+    enterChannel (index) {
+      this.active = index
+      this.popupShow = false
+    },
     async getChannels () {
-      const { data } = await getChannels()
-      this.channels = data.data.channels
+      if (getItem('myChannel')) {
+        this.channels = getItem('myChannel')
+      } else {
+        const { data } = await getChannels()
+        this.channels = data.data.channels
       // console.log(this.channels)
+      }
     }
   },
   computed: {},
-  watch: {},
+  watch: {
+    channels (newValue, oldValue) {
+      setItem('myChannel', newValue)
+    }
+  },
   created () {
     this.getChannels()
   },
@@ -81,5 +97,10 @@ export default {
   right: 0;
   background-color: #fff;
   opacity: 0.8;
+}
+.searchBtn{
+  width: 120px;
+  background-color:rgba(#5babfb,0.9) ;
+  color: #fff
 }
 </style>

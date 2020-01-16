@@ -5,18 +5,31 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/',
+    redirect: '/home'
+  },
+  {
     path: '/login',
     component: () => import ('@/views/login')
+  },
+  {
+    path: '/search',
+    component: () => import ('@/views/search')
+  },
+  {
+    path: '/article/:articleId',
+    component: () => import ('@/views/article'),
+    props: true
   },
   {
     path: '/user/:id',
     component: () => import ('@/views/user')
   },
   {
-    path: '/',
+    path: '',
     component: () => import ('@/views/tab-bar'),
     children: [{
-      path: 'home',
+      path: '/home',
       component: () => import ('@/views/home')
     },
     {

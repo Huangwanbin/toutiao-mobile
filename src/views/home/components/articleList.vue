@@ -1,8 +1,8 @@
 <template>
-  <div class="channel-list">
+  <div class="article-list">
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-        <van-cell v-for="item in list" :key="item.aut_id" :title="item.title" />
+        <van-cell v-for="(item,index) in list" :key="index" :title="item.title" @click="$router.push('/article/'+item.art_id)" />
       </van-list>
     </van-pull-refresh>
   </div>
@@ -11,7 +11,7 @@
 <script>
 import { getArticlesByChannel } from '@/api/article'
 export default {
-  name: 'channelList',
+  name: 'articleList',
   props: {
     channel: {
       type: Object,
@@ -43,7 +43,7 @@ export default {
     },
     async onLoad () {
       // 异步更新数据
-      console.log(this.channel)
+      // console.log(this.channel)
       let { data } = await getArticlesByChannel({
         channel_id: this.channel.id,
         timestamp: this.timestamp ? this.timestamp : Date.now(),
