@@ -1,7 +1,8 @@
 <template>
-  <div class="comment-popup">
+<!-- 输入评论组件 -->
+  <div class="post-comment">
     <van-field
-      v-model="message"
+      :value="value"
       rows="3"
       autosize
       type="textarea"
@@ -9,22 +10,29 @@
       placeholder="请输入留言"
       show-word-limit
       class="textarea"
+      @input="$emit('onInput',$event)"
     />
-    <p class="public">发布</p>
+    <p class="public" @click="$emit('click-post')">发布</p>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'commentPopup',
-  props: {},
+  name: 'postComment',
+  props: {
+    value: {
+      type: String,
+      required: true
+    }
+  },
   components: {},
   data () {
     return {
       message: ''
     }
   },
-  methods: {},
+  methods: {
+  },
   computed: {},
   watch: {},
   created () {},
@@ -33,7 +41,7 @@ export default {
 </script>
 
 <style lang='less' scoped>
-.comment-popup{
+.post-comment{
     display: flex;
     align-items: center;
     .textarea{

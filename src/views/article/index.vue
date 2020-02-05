@@ -34,7 +34,7 @@
       <div class="markdown-body" v-html="articleContent.content"></div>
       <van-divider>正文结束</van-divider>
       <!-- 文章评论 -->
-      <article-comment :articleId="articleId"></article-comment>
+      <article-comment :articleId="articleId" ref="articleComments"></article-comment>
     </div>
     <!-- /文章详情 -->
 
@@ -66,12 +66,13 @@
 
     <!-- 底部弹出层 -->
     <van-popup v-model="isPopupShow" position="bottom" :style="{ height: '20%' }" class="popup">
-      <comment-popup class="popupContent"></comment-popup>
+      <comment-popup class="popupContent" @onInput="comment=$event" @click-post="publishComment" :value='comment'></comment-popup>
     </van-popup>
   </div>
 </template>
 
 <script>
+import { addArticleComment } from '@/api/comment'
 import {
   getArticleContent,
   addCollect,
@@ -99,10 +100,23 @@ export default {
       isPopupShow: false,
       isBtnLoading: false,
       articleContent: {},
-      isLoadingShow: false
+      isLoadingShow: false,
+      comment: ''
     }
   },
   methods: {
+    // 发布评论
+    async publishComment () {
+      // console.log(this.comment)
+      const { data } = await addArticleComment({
+        target: this.articleId,
+        content: this.comment
+      })
+      console.log(data)
+      this.comment = ''
+      this.$refs.articleComments.list.unshift(data.data.new_obj)
+      this.isPopupShow = false
+    },
     // 关注按钮
     async onFllowClick () {
       this.isBtnLoading = true

@@ -30,7 +30,7 @@
           </div>
           <div class="action">
             <van-button type="primary" size="small" v-if="$route.params.id===userInfo.id">私信</van-button>
-            <van-button type="default" size="small" v-else>编辑资料</van-button>
+            <van-button type="default" size="small" v-else @click="$router.push('/user/profile')">编辑资料</van-button>
             <van-button type="default" size="small" v-if="$route.params.id===userInfo.id">关注</van-button>
           </div>
         </div>

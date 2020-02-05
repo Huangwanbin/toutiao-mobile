@@ -63,3 +63,12 @@ export const removeLike = id => {
     url: `/app/v1_0/article/likings/${id}`
   })
 }
+
+// 获取用户收藏列表
+export const getUserCollectArticles = params => {
+  return request({
+    method: 'get',
+    url: '/app/v1_0/article/collections',
+    params
+  })
+}

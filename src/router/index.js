@@ -22,6 +22,15 @@ const routes = [
     props: true
   },
   {
+    path: '/my-article/:type?',
+    component: () => import ('@/views/user-article'),
+    props: true
+  },
+  {
+    path: '/user/profile',
+    component: () => import ('@/views/user/components/profile.vue')
+  },
+  {
     path: '/user/:id',
     component: () => import ('@/views/user')
   },

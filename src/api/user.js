@@ -50,3 +50,29 @@ export const unFollowUser = target => {
     method: 'delete'
   })
 }
+
+// 获取用户个人资料
+export const getUserProfile = () => {
+  return request({
+    method: 'get',
+    url: '/app/v1_0/user/profile'
+  })
+}
+
+// 编辑用户头像
+export const changeUserPhoto = data => {
+  return request({
+    method: 'patch',
+    url: '/app/v1_0/user/photo',
+    data
+  })
+}
+
+// 编辑用户个人资料
+export const changeUserProfile = data => {
+  return request({
+    method: 'patch',
+    url: '/app/v1_0/user/profile',
+    data
+  })
+}

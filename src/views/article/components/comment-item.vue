@@ -1,4 +1,5 @@
 <template>
+<!-- 遍历的评论组件 -->
 <div class='comment-item'>
 <van-cell>
     <!-- 评论作者头像 -->
