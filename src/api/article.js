@@ -72,3 +72,21 @@ export const getUserCollectArticles = params => {
     params
   })
 }
+
+// 获取用户阅读历史
+export const getUserHistoryArticles = params => {
+  return request({
+    method: 'get',
+    url: '/app/v1_0/user/histories',
+    params
+  })
+}
+
+// 获取用户作品
+export const getUserArticles = params => {
+  return request({
+    method: 'get',
+    url: '/app/v1_0/user/articles',
+    params
+  })
+}
