@@ -1,1 +1,30 @@
-<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel=icon href=/favicon.ico><title>toutiao-mobile</title><link rel=stylesheet href=//at.alicdn.com/t/font_1603869_8pu5rc014ax.css><link href=/css/chunk-1ab51502.579bebe9.css rel=prefetch><link href=/css/chunk-381a7443.1d485560.css rel=prefetch><link href=/css/chunk-3bfbaa49.6bbcec1c.css rel=prefetch><link href=/css/chunk-3df9eae1.cacb6ac8.css rel=prefetch><link href=/css/chunk-406bda99.f6a84895.css rel=prefetch><link href=/css/chunk-53cda52f.2268f1bd.css rel=prefetch><link href=/css/chunk-6e1517f7.9628a61e.css rel=prefetch><link href=/css/chunk-9d5db5d2.1c9ef4a8.css rel=prefetch><link href=/js/chunk-1ab51502.8ff55988.js rel=prefetch><link href=/js/chunk-297fc3ce.60ab2550.js rel=prefetch><link href=/js/chunk-2d0a2e01.555d61b4.js rel=prefetch><link href=/js/chunk-2d0d63a2.f72d32b1.js rel=prefetch><link href=/js/chunk-381a7443.f4fdeb6b.js rel=prefetch><link href=/js/chunk-3bfbaa49.142902e0.js rel=prefetch><link href=/js/chunk-3df9eae1.1e559d4e.js rel=prefetch><link href=/js/chunk-406bda99.64ec69e3.js rel=prefetch><link href=/js/chunk-53cda52f.d75ab020.js rel=prefetch><link href=/js/chunk-6e1517f7.3f475ae5.js rel=prefetch><link href=/js/chunk-73598f61.48bd422d.js rel=prefetch><link href=/js/chunk-9d5db5d2.fec2cab0.js rel=prefetch><link href=/css/app.bdb31057.css rel=preload as=style><link href=/css/chunk-vendors.ae66e93a.css rel=preload as=style><link href=/js/app.cfc050fd.js rel=preload as=script><link href=/js/chunk-vendors.2bd66ca8.js rel=preload as=script><link href=/css/chunk-vendors.ae66e93a.css rel=stylesheet><link href=/css/app.bdb31057.css rel=stylesheet></head><body><noscript><strong>We're sorry but toutiao-mobile doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=/js/chunk-vendors.2bd66ca8.js></script><script src=/js/app.cfc050fd.js></script></body></html>
+<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel=icon href=/favicon.ico><title>toutiao-mobile</title><link rel=stylesheet href=//at.alicdn.com/t/font_1603869_8pu5rc014ax.css><link href=/css/chunk-1ab51502.579bebe9.css rel=prefetch><link href=/css/chunk-381a7443.1d485560.css rel=prefetch><link href=/css/chunk-3bfbaa49.6bbcec1c.css rel=prefetch><link href=/css/chunk-3df9eae1.cacb6ac8.css rel=prefetch><link href=/css/chunk-406bda99.f6a84895.css rel=prefetch><link href=/css/chunk-53cda52f.2268f1bd.css rel=prefetch><link href=/css/chunk-6e1517f7.9628a61e.css rel=prefetch><link href=/css/chunk-9d5db5d2.1c9ef4a8.css rel=prefetch><link href=/js/chunk-1ab51502.8ff55988.js rel=prefetch><link href=/js/chunk-297fc3ce.60ab2550.js rel=prefetch><link href=/js/chunk-2d0a2e01.555d61b4.js rel=prefetch><link href=/js/chunk-2d0d63a2.f72d32b1.js rel=prefetch><link href=/js/chunk-381a7443.f4fdeb6b.js rel=prefetch><link href=/js/chunk-3bfbaa49.142902e0.js rel=prefetch><link href=/js/chunk-3df9eae1.1e559d4e.js rel=prefetch><link href=/js/chunk-406bda99.64ec69e3.js rel=prefetch><link href=/js/chunk-53cda52f.d75ab020.js rel=prefetch><link href=/js/chunk-6e1517f7.3f475ae5.js rel=prefetch><link href=/js/chunk-73598f61.48bd422d.js rel=prefetch><link href=/js/chunk-9d5db5d2.fec2cab0.js rel=prefetch><link href=/css/app.bdb31057.css rel=preload as=style><link href=/css/chunk-vendors.ae66e93a.css rel=preload as=style><link href=/js/app.cfc050fd.js rel=preload as=script><link href=/js/chunk-vendors.2bd66ca8.js rel=preload as=script><link href=/css/chunk-vendors.ae66e93a.css rel=stylesheet><link href=/css/app.bdb31057.css rel=stylesheet></head><body><script>document.addEventListener('plusready', function() {
+        var webview = plus.webview.currentWebview();
+        plus.key.addEventListener('backbutton', function() {
+          webview.canBack(function(e) {
+            if (e.canBack) {
+              webview.back();
+            } else {
+              //webview.close(); //hide,quit
+              //plus.runtime.quit();
+              //首页返回键处理
+              //处理逻辑：1秒内，连续两次按返回键，则退出应用；
+              var first = null;
+              plus.key.addEventListener('backbutton', function() {
+                //首次按键，提示‘再按一次退出应用’
+                if (!first) {
+                  first = new Date().getTime();
+                  console.log('再按一次退出应用');
+                  setTimeout(function() {
+                    first = null;
+                  }, 1000);
+                } else {
+                  if (new Date().getTime() - first < 1500) {
+                    plus.runtime.quit();
+                  }
+                }
+              }, false);
+            }
+          })
+        });
+      });</script><noscript><strong>We're sorry but toutiao-mobile doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=/js/chunk-vendors.2bd66ca8.js></script><script src=/js/app.cfc050fd.js></script></body></html>
